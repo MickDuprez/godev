@@ -1,2 +1,2 @@
 # godev
-go dev repo for learning golang
+Random code repo for learning golang
