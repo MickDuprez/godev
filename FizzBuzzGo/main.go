@@ -18,5 +18,20 @@ import "fmt"
 //		While this is a simple application, the tools and methodologies
 //		used to write reliable/maintainable software remain pretty much the same.
 func main() {
-	fmt.Println("Hello, World!")
+	for x := 1; x <= 100; x++ {
+		if x%3 == 0 && x%5 == 0 {
+			fmt.Println("FizzBuzz")
+			continue
+		}
+		if x%3 == 0 {
+			fmt.Println("Fizz")
+			continue
+		}
+		if x%5 == 0 {
+			fmt.Println("Buzz")
+			continue
+		}
+
+		fmt.Println(x)
+	}
 }
