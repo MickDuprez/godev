@@ -2,8 +2,10 @@ package main
 
 import (
 	"log"
+	"math/rand"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/go-gl/gl/v4.1-core/gl"
 	"github.com/go-gl/glfw/v3.2/glfw"
@@ -30,10 +32,17 @@ const (
 
 	rows    = 100
 	columns = 100
+
+	threshold = 0.08
+
+	fps = 10
 )
 
 type cell struct {
 	drawable uint32
+
+	alive     bool
+	aliveNext bool
 
 	x int
 	y int
@@ -51,11 +60,79 @@ var (
 	}
 )
 
+func (c *cell) checkState(cells [][]*cell) {
+	c.alive = c.aliveNext
+	c.aliveNext = c.alive
+
+	liveCount := c.liveNeighbors(cells)
+	if c.alive {
+		// 1. Any live cell with with fewer than 2 live neihbours dies, as if by
+		// underpopulation.
+		if liveCount < 2 {
+			c.aliveNext = false
+		}
+
+		// 2. Any live cell with two or three live neihbours lives on the next generation.
+		if liveCount == 2 || liveCount == 3 {
+			c.aliveNext = true
+		}
+
+		// 3. Any live cell with more than 3 live neihbours dies, as if by overpopulation.
+		if liveCount > 3 {
+			c.aliveNext = false
+		}
+	} else {
+		// 4. Any dead cell with exactly three live neihbours becomes a live cell,
+		// as if by reproduction.
+		if liveCount == 3 {
+			c.aliveNext = true
+		}
+	}
+}
+
+func (c *cell) liveNeighbors(cells [][]*cell) int {
+	var liveCount int
+	add := func(x, y int) {
+		if x == len(cells) {
+			x = 0
+		} else if x == -1 {
+			x = len(cells) - 1
+		}
+
+		if y == len(cells[x]) {
+			y = 0
+		} else if y == -1 {
+			y = len(cells[x]) - 1
+		}
+
+		if cells[x][y].alive {
+			liveCount++
+		}
+	}
+
+	add(c.x-1, c.y)   // cell to the left
+	add(c.x+1, c.y)   // to the right
+	add(c.x, c.y+1)   // up
+	add(c.x, c.y-1)   // down
+	add(c.x-1, c.y+1) // top left
+	add(c.x+1, c.y+1) // top right
+	add(c.x-1, c.y-1) // btm left
+	add(c.x+1, c.y-1) // btm right
+
+	return liveCount
+}
+
 func makeCells() [][]*cell {
+	rand.Seed(time.Now().UnixNano())
+
 	cells := make([][]*cell, rows, columns)
 	for x := 0; x < rows; x++ {
 		for y := 0; y < columns; y++ {
 			c := newCell(x, y)
+
+			c.alive = rand.Float64() < threshold
+			c.aliveNext = c.alive
+
 			cells[x] = append(cells[x], c)
 		}
 	}
@@ -88,9 +165,11 @@ func newCell(x, y int) *cell {
 	}
 
 	return &cell{
-		drawable: makeVao(points),
-		x:        x,
-		y:        y,
+		drawable:  makeVao(points),
+		x:         x,
+		y:         y,
+		alive:     false,
+		aliveNext: false,
 	}
 }
 
@@ -103,7 +182,17 @@ func main() {
 
 	cells := makeCells()
 	for !window.ShouldClose() {
+		t := time.Now()
+
+		for x := range cells {
+			for _, c := range cells[x] {
+				c.checkState(cells)
+			}
+		}
+
 		draw(cells, window, program)
+
+		time.Sleep(time.Second/time.Duration(fps) - time.Since(t))
 	}
 }
 
@@ -158,6 +247,9 @@ func draw(cells [][]*cell, window *glfw.Window, program uint32) {
 }
 
 func (c *cell) draw() {
+	if !c.alive {
+		return
+	}
 	gl.BindVertexArray(c.drawable)
 	gl.DrawArrays(gl.TRIANGLES, 0, int32(len(square)/3))
 }
