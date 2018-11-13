@@ -30,8 +30,8 @@ const (
 		}
 	` + "\x00"
 
-	rows    = 100
-	columns = 100
+	rows    = 500
+	columns = 500
 
 	threshold = 0.08
 
