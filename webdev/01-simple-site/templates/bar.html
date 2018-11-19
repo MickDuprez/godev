@@ -1,16 +1,9 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Simple Site</title>
-</head>
-<body>
+{{ template "header.html" }}
     <h3>Welcome to the bar!</h3>
     User Name {{.UserName}}<br>
     Password {{ .Password }}<br>
     First {{.First}}<br>
     Last {{.Last}}<br>
     <h2><a href="/logout">Log Out</a></h2>
-</body>
-</html>
+
+{{ template "footer.html" }}

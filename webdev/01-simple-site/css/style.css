@@ -1,0 +1,155 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    -webkit-font-smooting: antialiased;
+    text-rendering: optimizeLegibility;
+    color: #6c6f73;
+    overflow: auto;
+}
+
+.form-signin {
+    background-color: #f5f5f5;
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+h6 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+}
+
+img {
+    max-width: 100%;
+}
+
+.blockquote {
+    font-size: 1.6rem;
+    color: #333;
+    border: none;
+    padding: 0;
+}
+
+.blockquote-footer {
+    margin: 1rem 0 0;
+}
+
+#stage {
+    background: url('img/stage.jpg') center center no-repeat;
+    background-size: cover;
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#stage-caption {
+    font-size: 1.4rem;
+    font-weight: 200;
+    max-width: 60rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#stage-caption h1 {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.feature-content {
+    padding: 8rem 0;
+    overflow: hidden;
+}
+
+/* remove padding from pics */
+
+.feature-content img {
+    margin-bottom: -8rem;
+}
+
+.feature-dark {
+    background: #262f36;
+    color: white;
+}
+
+.feature-dark h2, h6 {
+    color: white;
+}
+
+.feature-alt {
+    background: #f0f0f0;
+}
+
+#feature-four .feature-content {
+    padding: 0;
+}
+
+#feature-five img {
+    margin-top: 2rem;
+}
+
+#main-footer {
+    background: #262f36;
+    color: white;
+    padding: 2rem 0;
+    font-size: 0.8rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#main-footer h6 {
+    color: #718fa9;
+}
+
+#main-footer a {
+    color: #6c5f73;
+}
+
+/* media queries */
+
+@media screen and ( min-width: 991px) {
+    .feature-content {
+        display: flex;
+        align-items: center;
+    }
+}

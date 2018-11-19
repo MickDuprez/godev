@@ -1,18 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-
-<h1>LOGIN</h1>
-<form method="post">
-    <input type="text" name="username" placeholder="email">
-    <input type="password" name="password" placeholder="password">
-    <input type="submit">
-</form>
-<h2><a href="/signup">signup</a></h2>
-
-</body>
-</html>
+{{ template "header.html" }}
+<section class="form-signin text-center">
+    <form class="">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</section>
+{{ template "footer.html" }}
